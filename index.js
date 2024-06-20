@@ -16,6 +16,25 @@ app.get("/cats", async (request, response) => {
   }
 });
 
+app.post("/expenses", async function (request, response) {
+  const data = request.body;
+
+  try {
+    let newCat = new model.Expense({
+      name: data.name,
+      count: data.count,
+    });
+    let error = newCat.validateSync();
+    if (error) {
+      response.status(400).send(error);
+      return;
+    }
+    await newCat.save();
+    response.status(204).json(newCat);
+  } catch (error) {
+    response.status(400).send(error);
+  }
+});
 app.listen(8080, () => {
   console.log("Server is running on http://localhost:8080");
 });

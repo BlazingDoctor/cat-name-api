@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 
-mongoose.connect(
-  "mongodb+srv://DoctorBlaze:docmongo@cluster0.bwnxa0p.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-);
+mongoose
+  .connect
+  //fix later
+  ();
 
 const CatSchema = new mongoose.Schema({
   category: {
@@ -15,7 +16,7 @@ const CatSchema = new mongoose.Schema({
   },
 });
 
-const Cats = mongoose.model("Schema", CatSchema);
+const Cats = mongoose.model("JournalEntry", CatSchema);
 
 module.exports = {
   Cats: Cats,

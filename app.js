@@ -1,46 +1,46 @@
 Vue.createApp({
-  data: function () {
+  data() {
     return {
-      students: [],
-      student_name: "",
-      student_major: "",
+      cats: [],
+      cat_name: "",
+      cat_count: "",
     };
   },
 
   methods: {
-    loadStudents: async function () {
-      let resp = await fetch("http://localhost:8080/students");
-      this.students = await resp.json();
+    loadCats: async function () {
+      let resp = await fetch("http://localhost:8080/cats");
+      this.cats = await resp.json();
+      console.log(this.cats);
     },
-
-    addStudent: async function () {
+    addCat: async function () {
       myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-      if (this.student_name.trim() === "" || this.student_major.trim() === "") {
+      if (this.cat_name.trim() === "" || this.cat_count.trim() === "") {
         alert("No empty fields");
         return;
       }
 
       let encodedData =
         "name=" +
-        encodeURIComponent(this.student_name) +
-        "&major=" +
-        encodeURIComponent(this.student_major);
+        encodeURIComponent(this.cat_name) +
+        "&count=" +
+        encodeURIComponent(this.cat_count);
 
       let requestOptions = {
         method: "POST",
         body: encodedData,
         headers: myHeaders,
       };
-      fetch("http://localhost:8080/students", requestOptions).then(() => {
-        this.loadStudents();
+      fetch("http://localhost:8080/cats", requestOptions).then(() => {
+        this.loadCats();
       });
     },
   },
 
   created: function () {
-    console.log("Hello, Vue.");
-    this.loadStudents();
+    console.log("vue app loaded!");
+    this.loadCats();
   },
 }).mount("#app");
