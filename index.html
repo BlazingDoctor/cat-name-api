@@ -7,9 +7,12 @@
   <body>
     <div id="app">
       <h2>Add Cat</h2>
-      <input v-model="cat_name" />
-      <input v-model="cat_count" />
-      <button v-on:click="addCat">addCat</button>
+      <input v-model="newCats.name" type="text" />
+      <input v-model="newCats.count" type="number" />
+      <button v-on:click="addCats">addCat</button>
+
+      <input v-model="deleteName" type="text" />
+      <button v-on:click="deleteCat(deleteName)">deleteCat</button>
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="app.js"></script>

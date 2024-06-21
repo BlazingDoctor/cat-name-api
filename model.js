@@ -1,22 +1,23 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 mongoose
-  .connect
-  //fix later
-  ();
+  .connect(process.env.MONGODB_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch((error) => console.error("MongoDB connection error:", error));
 
 const CatSchema = new mongoose.Schema({
-  category: {
+  name: {
     type: String,
     required: [true, "cat(s) must be named."],
   },
-  amount: {
+  count: {
     type: Number,
-    required: [true, "cat number must an amount."],
+    required: [true, "cat number must be an amount."],
   },
 });
 
-const Cats = mongoose.model("JournalEntry", CatSchema);
+const Cats = mongoose.model("Cats", CatSchema);
 
 module.exports = {
   Cats: Cats,

@@ -16,11 +16,11 @@ app.get("/cats", async (request, response) => {
   }
 });
 
-app.post("/expenses", async function (request, response) {
+app.post("/cats", async function (request, response) {
   const data = request.body;
 
   try {
-    let newCat = new model.Expense({
+    let newCat = new model.Cats({
       name: data.name,
       count: data.count,
     });
@@ -30,11 +30,29 @@ app.post("/expenses", async function (request, response) {
       return;
     }
     await newCat.save();
-    response.status(204).json(newCat);
+    response.status(201).json(newCat);
+  } catch (error) {
+    console.error("Error fetching cats:", error);
+    response.status(400).send(error);
+  }
+});
+
+app.delete("/cats/:id", async (request, response) => {
+  try {
+    let isDeleted = await model.Cats.findOneAndDelete({
+      _id: request.params.id,
+    });
+    if (isDeleted) {
+      console.log("Cat Removed");
+      response.status(204).send("Cat Removed");
+    } else {
+      response.status(404).send("Cat not found :(");
+    }
   } catch (error) {
     response.status(400).send(error);
   }
 });
+
 app.listen(8080, () => {
   console.log("Server is running on http://localhost:8080");
 });
